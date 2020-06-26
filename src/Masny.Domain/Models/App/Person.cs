@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Masny.Domain.Models.App
 {
     /// <summary>
-    /// User.
+    /// Person.
     /// </summary>
-    public class User
+    public class Person
     {
         /// <summary>
         /// Identifier.
@@ -14,29 +13,19 @@ namespace Masny.Domain.Models.App
         public int Id { get; set; }
 
         /// <summary>
+        /// Cloud identifier.
+        /// </summary>
+        public int CloudId { get; set; }
+
+        /// <summary>
         /// Name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Username.
-        /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
         /// Email.
         /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        /// Phone.
-        /// </summary>
-        public string Phone { get; set; }
-
-        /// <summary>
-        /// Website.
-        /// </summary>
-        public string Website { get; set; }
 
         /// <summary>
         /// Collection for Posts.

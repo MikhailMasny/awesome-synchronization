@@ -20,7 +20,7 @@ namespace Masny.Domain.Models.App
         /// <summary>
         /// Navigation to User.
         /// </summary>
-        public User User { get; set; }
+        public Person User { get; set; }
 
         /// <summary>
         /// Title.
