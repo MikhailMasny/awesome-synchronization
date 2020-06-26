@@ -17,7 +17,7 @@ namespace Masny.Infrastructure.AppContext
             : base(options) { }
 
         /// <summary>
-        /// User entities.
+        /// Person entities.
         /// </summary>
         public DbSet<Person> Persons { get; set; }
 
