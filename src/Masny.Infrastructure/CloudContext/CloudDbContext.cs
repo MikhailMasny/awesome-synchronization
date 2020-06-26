@@ -18,7 +18,7 @@ namespace Masny.Infrastructure.CloudContext
         /// <summary>
         /// User entities.
         /// </summary>
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
 
         /// <summary>
         /// Post entities.
