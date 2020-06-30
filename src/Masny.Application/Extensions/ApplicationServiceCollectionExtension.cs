@@ -20,6 +20,7 @@ namespace Masny.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddScoped<IPersonManager, PersonManager>();
             services.AddScoped<ICloudManager, CloudManager>();
 
             return services;

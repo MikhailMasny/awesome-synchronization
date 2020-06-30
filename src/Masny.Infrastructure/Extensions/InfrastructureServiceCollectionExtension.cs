@@ -1,6 +1,7 @@
 ﻿using Masny.Application.Interfaces;
 using Masny.Infrastructure.AppContext;
 using Masny.Infrastructure.CloudContext;
+using Masny.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,8 @@ namespace Masny.Infrastructure.Extensions
 
             services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
             services.AddScoped<ICloudDbContext>(provider => provider.GetService<CloudDbContext>());
+
+            services.AddScoped<IPersonSynchronizationService, PersonSynchronizationService>();
 
             return services;
         }

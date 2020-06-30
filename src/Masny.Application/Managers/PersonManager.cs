@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Masny.Application.Managers
 {
-    class PersonManager
+    /// <inheritdoc cref="IPersonManager"/>
+    public class PersonManager : IPersonManager
     {
         private readonly IAppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,6 +21,7 @@ namespace Masny.Application.Managers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <inheritdoc/>
         public async Task<int> CreatePerson(PersonDto personDto)
         {
             var person = _mapper.Map<PersonDto, Person>(personDto);
@@ -27,18 +29,21 @@ namespace Masny.Application.Managers
             return await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<PersonDto> GetPerson(int id)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(p => p.Id == id);
             return _mapper.Map<Person, PersonDto>(person);
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<PersonDto>> GetPeople()
         {
             var people = await _context.Persons.ToListAsync();
             return _mapper.Map<IEnumerable<Person>, IEnumerable<PersonDto>>(people);
         }
 
+        /// <inheritdoc/>
         public async Task<int> UpdatePerson(PersonDto personDto)
         {
             var person = _mapper.Map<PersonDto, Person>(personDto);
@@ -46,6 +51,7 @@ namespace Masny.Application.Managers
             return await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<int> DeletePerson(int id)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(p => p.Id == id);

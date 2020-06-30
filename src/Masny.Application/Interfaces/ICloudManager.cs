@@ -4,7 +4,7 @@ using System.Linq;
 namespace Masny.Application.Interfaces
 {
     /// <summary>
-    /// Clound manager.
+    /// Cloud manager.
     /// </summary>
     public interface ICloudManager
     {
