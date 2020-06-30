@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Masny.Application.Interfaces;
+using Masny.Domain.Models.App;
 
-namespace Masny.Domain.Models.App
+namespace Masny.Application.Models
 {
     /// <summary>
-    /// Post.
+    /// Post data transfer object.
     /// </summary>
-    public class Post
+    public class PostDto : IMapFrom<Post>
     {
         /// <summary>
         /// Identifier.
@@ -23,11 +24,6 @@ namespace Masny.Domain.Models.App
         public int UserId { get; set; }
 
         /// <summary>
-        /// Navigation to User.
-        /// </summary>
-        public Person User { get; set; }
-
-        /// <summary>
         /// Title.
         /// </summary>
         public string Title { get; set; }
@@ -36,10 +32,5 @@ namespace Masny.Domain.Models.App
         /// Body.
         /// </summary>
         public string Body { get; set; }
-
-        /// <summary>
-        /// Collection for Comments.
-        /// </summary>
-        public ICollection<Comment> Comments { get; set; }
     }
 }

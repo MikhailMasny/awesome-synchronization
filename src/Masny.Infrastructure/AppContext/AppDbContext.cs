@@ -1,13 +1,14 @@
-﻿using Masny.Domain.Models.App;
+﻿using Masny.Application.Interfaces;
+using Masny.Domain.Models.App;
 using Masny.Infrastructure.AppContext.Configurations;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Masny.Infrastructure.AppContext
 {
-    /// <summary>
-    /// Application database context.
-    /// </summary>
-    public class AppDbContext : DbContext
+    /// <inheritdoc cref="IAppDbContext"/>
+    public class AppDbContext : DbContext, IAppDbContext
     {
         /// <summary>
         /// Constructor.
@@ -16,20 +17,20 @@ namespace Masny.Infrastructure.AppContext
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 
-        /// <summary>
-        /// Person entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Person> Persons { get; set; }
 
-        /// <summary>
-        /// Post entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Post> Posts { get; set; }
 
-        /// <summary>
-        /// Comment entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Comment> Comments { get; set; }
+
+        /// <inheritdoc/>
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

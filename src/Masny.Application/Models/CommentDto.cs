@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Masny.Application.Interfaces;
+using Masny.Domain.Models.App;
 
-namespace Masny.Domain.Models.App
+namespace Masny.Application.Models
 {
     /// <summary>
-    /// Post.
+    /// Comment data transfer object
     /// </summary>
-    public class Post
+    public class CommentDto : IMapFrom<Comment>
     {
         /// <summary>
         /// Identifier.
@@ -18,28 +19,23 @@ namespace Masny.Domain.Models.App
         public int CloudId { get; set; }
 
         /// <summary>
-        /// User identifier.
+        /// Post identifier.
         /// </summary>
-        public int UserId { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
-        /// Navigation to User.
+        /// Name.
         /// </summary>
-        public Person User { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Title.
+        /// Email.
         /// </summary>
-        public string Title { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Body.
         /// </summary>
         public string Body { get; set; }
-
-        /// <summary>
-        /// Collection for Comments.
-        /// </summary>
-        public ICollection<Comment> Comments { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using Masny.Domain.Models.Cloud;
+﻿using Masny.Application.Interfaces;
+using Masny.Domain.Models.Cloud;
 using Microsoft.EntityFrameworkCore;
 
 namespace Masny.Infrastructure.CloudContext
 {
-    /// <summary>
-    /// Cloud database context.
-    /// </summary>
-    public class CloudDbContext : DbContext
+    /// <inheritdoc cref="ICloudDbContext"/>
+    public class CloudDbContext : DbContext, ICloudDbContext
     {
         /// <summary>
         /// Constructor.
@@ -15,19 +14,13 @@ namespace Masny.Infrastructure.CloudContext
         public CloudDbContext(DbContextOptions<CloudDbContext> options)
             : base(options) { }
 
-        /// <summary>
-        /// User entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<User> Users { get; set; }
 
-        /// <summary>
-        /// Post entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Post> Posts { get; set; }
 
-        /// <summary>
-        /// Comment entities.
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Comment> Comments { get; set; }
     }
 }

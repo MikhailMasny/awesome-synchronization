@@ -1,4 +1,5 @@
-﻿using Masny.Infrastructure.AppContext;
+﻿using Masny.Application.Interfaces;
+using Masny.Infrastructure.AppContext;
 using Masny.Infrastructure.CloudContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,9 @@ namespace Masny.Infrastructure.Extensions
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AppConnection")));
             services.AddDbContext<CloudDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("CloudConnection")));
+
+            services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
+            services.AddScoped<ICloudDbContext>(provider => provider.GetService<CloudDbContext>());
 
             return services;
         }
