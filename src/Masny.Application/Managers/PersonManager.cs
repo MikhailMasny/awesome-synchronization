@@ -24,8 +24,18 @@ namespace Masny.Application.Managers
         /// <inheritdoc/>
         public async Task<int> CreatePerson(PersonDto personDto)
         {
-            var person = _mapper.Map<PersonDto, Person>(personDto);
-            await _context.Persons.AddAsync(person);
+            try
+            {
+                var person = _mapper.Map<PersonDto, Person>(personDto);
+                await _context.Persons.AddAsync(person);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            
             return await _context.SaveChangesAsync();
         }
 

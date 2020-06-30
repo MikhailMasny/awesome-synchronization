@@ -12,6 +12,6 @@ namespace Masny.Application.Interfaces
         /// Mapping.
         /// </summary>
         /// <param name="profile">Model profile.</param>
-        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
+        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType()).ReverseMap();
     }
 }
