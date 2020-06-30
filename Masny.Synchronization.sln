@@ -7,13 +7,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9D1D05F9-EDF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3FF7AA35-DAB5-4983-A4A9-78AE100D75A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masny.Domain", "src\Masny.Domain\Masny.Domain.csproj", "{9D537C99-991A-409D-84B7-18BF936CF397}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masny.Domain", "src\Masny.Domain\Masny.Domain.csproj", "{9D537C99-991A-409D-84B7-18BF936CF397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masny.Application", "src\Masny.Application\Masny.Application.csproj", "{2F5EB5F1-7CBF-41B2-A796-16B634357CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masny.Application", "src\Masny.Application\Masny.Application.csproj", "{2F5EB5F1-7CBF-41B2-A796-16B634357CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masny.Infrastructure", "src\Masny.Infrastructure\Masny.Infrastructure.csproj", "{E5C59CB2-63E2-4D81-9A77-32D97FCBA383}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masny.Infrastructure", "src\Masny.Infrastructure\Masny.Infrastructure.csproj", "{E5C59CB2-63E2-4D81-9A77-32D97FCBA383}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masny.Worker", "src\Masny.Worker\Masny.Worker.csproj", "{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masny.Worker", "src\Masny.Worker\Masny.Worker.csproj", "{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B953BEE-8ACC-4B9F-9763-FD2B0AE5F68A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
