@@ -13,6 +13,11 @@ namespace Masny.Domain.Models.App
         public int Id { get; set; }
 
         /// <summary>
+        /// Cloud identifier.
+        /// </summary>
+        public int CloudId { get; set; }
+
+        /// <summary>
         /// User identifier.
         /// </summary>
         public int UserId { get; set; }

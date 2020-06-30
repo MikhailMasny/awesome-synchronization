@@ -11,6 +11,11 @@
         public int Id { get; set; }
 
         /// <summary>
+        /// Cloud identifier.
+        /// </summary>
+        public int CloudId { get; set; }
+
+        /// <summary>
         /// Post identifier.
         /// </summary>
         public int PostId { get; set; }

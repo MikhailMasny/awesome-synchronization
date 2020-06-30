@@ -27,6 +27,7 @@ namespace Masny.Infrastructure.AppContext.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CloudId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true)
@@ -48,6 +49,7 @@ namespace Masny.Infrastructure.AppContext.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CloudId = table.Column<int>(nullable: false),
                     PostId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
