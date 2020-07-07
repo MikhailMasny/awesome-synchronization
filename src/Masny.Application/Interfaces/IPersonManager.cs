@@ -32,6 +32,12 @@ namespace Masny.Application.Interfaces
         Task<IEnumerable<PersonDto>> GetPeople();
 
         /// <summary>
+        /// Get people without tracking.
+        /// </summary>
+        /// <returns>List of person data transfer objects.</returns>
+        Task<IEnumerable<PersonDto>> GetPeopleWithoutTracking();
+
+        /// <summary>
         /// Update person.
         /// </summary>
         /// <param name="personDto">Person data transfer object.</param>
@@ -44,5 +50,12 @@ namespace Masny.Application.Interfaces
         /// <param name="id">Identifier.</param>
         /// <returns>Operation result.</returns>
         Task<int> DeletePerson(int id);
+
+        /// <summary>
+        /// Delete person by cloud identifier.
+        /// </summary>
+        /// <param name="cloudId">Cloud identifier.</param>
+        /// <returns>Operation result.</returns>
+        Task<int> DeletePersonByCloudId(int cloudId);
     }
 }

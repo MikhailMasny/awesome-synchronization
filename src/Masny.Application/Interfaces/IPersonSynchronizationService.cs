@@ -10,6 +10,18 @@ namespace Masny.Application.Interfaces
         /// <summary>
         /// Add new people.
         /// </summary>
-        Task AddNewPeople();
+        Task AddPeople();
+
+        /// <summary>
+        /// Delete people.
+        /// </summary>
+        /// <returns></returns>
+        Task DeletePeople();
+
+        /// <summary>
+        /// Update people.
+        /// </summary>
+        /// <returns></returns>
+        Task UpdatePeople();
     }
 }

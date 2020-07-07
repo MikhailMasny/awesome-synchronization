@@ -1,7 +1,5 @@
 ﻿using Masny.Application.Interfaces;
 using Masny.Application.Models;
-using Masny.Domain.Models.App;
-using Masny.Domain.Models.Cloud;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,21 +21,15 @@ namespace Masny.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task AddNewPeople()
+        public async Task AddPeople()
         {
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
-            var peopleApp = (await _personManager.GetPeople()).ToList();
+            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
 
             var peopleCloudIds = peopleCloud.Select(p => p.Id);
-            var peopleAppIds = peopleApp.Select(p => p.Id);
+            var peopleAppIds = peopleApp.Select(p => p.CloudId);
 
             var newIds = peopleCloudIds.Except(peopleAppIds);
-
-            //var people1 = new List<User>();
-            //foreach (var id in newIds)
-            //{
-            //    people1.Add(peopleCloud.FirstOrDefault(p => p.Id == id));
-            //}
 
             var people = peopleCloud.Join(
                 newIds,
@@ -45,16 +37,69 @@ namespace Masny.Infrastructure.Services
                 id => id,
                 (personCloud, id) => personCloud);
 
-            foreach (var user in people)
+            if (people.Any())
             {
-                var personDto = new PersonDto
+                foreach (var user in people)
                 {
-                    CloudId = user.Id,
-                    Name = user.Name,
-                    Email = user.Email
-                };
+                    var personDto = new PersonDto
+                    {
+                        CloudId = user.Id,
+                        Name = user.Name,
+                        Email = user.Email
+                    };
 
-                await _personManager.CreatePerson(personDto);
+                    await _personManager.CreatePerson(personDto);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task DeletePeople()
+        {
+            var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
+            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+
+            var peopleCloudIds = peopleCloud.Select(p => p.Id);
+            var peopleAppIds = peopleApp.Select(p => p.CloudId);
+
+            var deleteIds = peopleAppIds.Except(peopleCloudIds);
+
+            if (deleteIds.Any())
+            {
+                foreach (var id in deleteIds)
+                {
+                    await _personManager.DeletePersonByCloudId(id);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task UpdatePeople()
+        {
+            var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
+            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+
+            foreach (var personApp in peopleApp)
+            {
+                var personCloud = peopleCloud.FirstOrDefault(p => p.Id == personApp.CloudId);
+                var isUpdated = false;
+
+                if (personApp.Email != personCloud.Email)
+                {
+                    personApp.Email = personCloud.Email;
+                    isUpdated = true;
+                }
+
+                if (personApp.Name != personCloud.Name)
+                {
+                    personApp.Name = personCloud.Name;
+                    isUpdated = true;
+                }
+
+                if (isUpdated)
+                {
+                    await _personManager.UpdatePerson(personApp);
+                }
             }
         }
     }

@@ -16,26 +16,13 @@ namespace Masny.Worker
 {
     public class Program
     {
-        //public static void Main(string[] args)
-        //{
-        //    CreateHostBuilder(args).Build().Run();
-        //}
-
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        });
-
-
         public static void Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
             host.Services.UseScheduler(scheduler => {
                 scheduler
-                    .Schedule<PeopleSyncTask>()
-                    .EveryMinute()
+                    .Schedule<PeopleSynchronizationTask>()
+                    .EveryThirtySeconds()
                     .Weekday();
             });
             host.Run();
@@ -50,7 +37,7 @@ namespace Masny.Worker
                         .Build();
 
                     services.AddScheduler();
-                    services.AddTransient<PeopleSyncTask>();
+                    services.AddTransient<PeopleSynchronizationTask>();
                     services.AddApplication();
                     services.AddInfrastructure(configuration);
                 });

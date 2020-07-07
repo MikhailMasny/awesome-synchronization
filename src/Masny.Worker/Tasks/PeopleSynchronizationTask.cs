@@ -5,18 +5,24 @@ using System.Threading.Tasks;
 
 namespace Masny.Worker.Tasks
 {
-    public class PeopleSyncTask : IInvocable
+    /// <summary>
+    /// People synchronization task by Coravel.
+    /// </summary>
+    public class PeopleSynchronizationTask : IInvocable
     {
         private readonly IPersonSynchronizationService _personSynchronizationService;
 
-        public PeopleSyncTask(IPersonSynchronizationService personSynchronizationService)
+        public PeopleSynchronizationTask(IPersonSynchronizationService personSynchronizationService)
         {
             _personSynchronizationService = personSynchronizationService ?? throw new ArgumentNullException(nameof(personSynchronizationService));
         }
 
+        /// <inheritdoc/>
         public async Task Invoke()
         {
-            await _personSynchronizationService.AddNewPeople();
+            await _personSynchronizationService.AddPeople();
+            await _personSynchronizationService.DeletePeople();
+            await _personSynchronizationService.UpdatePeople();
         }
     }
 }
