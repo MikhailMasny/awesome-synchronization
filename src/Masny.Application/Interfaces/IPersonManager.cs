@@ -26,6 +26,20 @@ namespace Masny.Application.Interfaces
         Task<PersonDto> GetPerson(int id);
 
         /// <summary>
+        /// Get person without tracking.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <returns>Person data transfer object.</returns>
+        Task<PersonDto> GetPersonWithoutTracking(int id);
+
+        /// <summary>
+        /// Get person without tracking by cloud identifier.
+        /// </summary>
+        /// <param name="cloudId">Cloud identifier.</param>
+        /// <returns>Person data transfer object.</returns>
+        Task<PersonDto> GetPersonWithoutTrackingByCloudId(int cloudId);
+
+        /// <summary>
         /// Get people.
         /// </summary>
         /// <returns>List of person data transfer objects.</returns>

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 namespace Masny.Worker.Tasks
 {
     /// <summary>
-    /// People synchronization task by Coravel.
+    /// Person synchronization task by Coravel.
     /// </summary>
-    public class PeopleSynchronizationTask : IInvocable
+    public class PersonSynchronizationTask : IInvocable
     {
         private readonly IPersonSynchronizationService _personSynchronizationService;
 
-        public PeopleSynchronizationTask(IPersonSynchronizationService personSynchronizationService)
+        public PersonSynchronizationTask(IPersonSynchronizationService personSynchronizationService)
         {
             _personSynchronizationService = personSynchronizationService ?? throw new ArgumentNullException(nameof(personSynchronizationService));
         }

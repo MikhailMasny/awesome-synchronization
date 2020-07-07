@@ -38,6 +38,20 @@ namespace Masny.Application.Managers
         }
 
         /// <inheritdoc/>
+        public async Task<PersonDto> GetPersonWithoutTracking(int id)
+        {
+            var person = await _context.Persons.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            return _mapper.Map<Person, PersonDto>(person);
+        }
+
+        /// <inheritdoc/>
+        public async Task<PersonDto> GetPersonWithoutTrackingByCloudId(int cloudId)
+        {
+            var person = await _context.Persons.AsNoTracking().FirstOrDefaultAsync(p => p.CloudId == cloudId);
+            return _mapper.Map<Person, PersonDto>(person);
+        }
+
+        /// <inheritdoc/>
         public async Task<IEnumerable<PersonDto>> GetPeople()
         {
             var people = await _context.Persons.ToListAsync();

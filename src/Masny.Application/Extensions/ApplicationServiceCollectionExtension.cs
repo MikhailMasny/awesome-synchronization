@@ -21,6 +21,7 @@ namespace Masny.Application.Extensions
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IPersonManager, PersonManager>();
+            services.AddScoped<IPostManager, PostManager>();
             services.AddScoped<ICloudManager, CloudManager>();
 
             return services;

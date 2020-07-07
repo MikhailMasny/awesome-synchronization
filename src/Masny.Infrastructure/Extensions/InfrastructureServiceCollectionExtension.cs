@@ -27,6 +27,7 @@ namespace Masny.Infrastructure.Extensions
             services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
             services.AddScoped<ICloudDbContext>(provider => provider.GetService<CloudDbContext>());
 
+            services.AddScoped<IPostSynchronizationService, PostSynchronizationService>();
             services.AddScoped<IPersonSynchronizationService, PersonSynchronizationService>();
 
             return services;

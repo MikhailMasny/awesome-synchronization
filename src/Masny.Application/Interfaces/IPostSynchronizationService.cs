@@ -3,23 +3,23 @@
 namespace Masny.Application.Interfaces
 {
     /// <summary>
-    /// Person synchronization service.
+    /// Post synchronization service.
     /// </summary>
-    public interface IPersonSynchronizationService
+    public interface IPostSynchronizationService
     {
         /// <summary>
-        /// Add new people.
+        /// Add new posts.
         /// </summary>
-        Task AddPeople();
+        Task AddPosts();
 
         /// <summary>
-        /// Delete people.
+        /// Delete posts.
         /// </summary>
-        Task DeletePeople();
+        Task DeletePosts();
 
         /// <summary>
-        /// Update people.
+        /// Update posts.
         /// </summary>
-        Task UpdatePeople();
+        Task UpdatePosts();
     }
 }

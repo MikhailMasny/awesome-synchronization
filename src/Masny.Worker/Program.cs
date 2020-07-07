@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Coravel;
 using Masny.Application.Extensions;
 using Masny.Infrastructure.Extensions;
@@ -10,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System;
 
 namespace Masny.Worker
 {
@@ -19,11 +15,17 @@ namespace Masny.Worker
         public static void Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
-            host.Services.UseScheduler(scheduler => {
+            host.Services.UseScheduler(scheduler =>
+            {
                 scheduler
-                    .Schedule<PeopleSynchronizationTask>()
-                    .EveryThirtySeconds()
-                    .Weekday();
+                    .Schedule<PersonSynchronizationTask>()
+                    .DailyAt(21, 32)
+                    .Zoned(TimeZoneInfo.Local);
+
+                scheduler
+                    .Schedule<PostSynchronizationTask>()
+                    .DailyAt(21, 33)
+                    .Zoned(TimeZoneInfo.Local);
             });
             host.Run();
         }
@@ -37,7 +39,8 @@ namespace Masny.Worker
                         .Build();
 
                     services.AddScheduler();
-                    services.AddTransient<PeopleSynchronizationTask>();
+                    services.AddTransient<PersonSynchronizationTask>();
+                    services.AddTransient<PostSynchronizationTask>();
                     services.AddApplication();
                     services.AddInfrastructure(configuration);
                 });
