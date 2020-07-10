@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masny.UnitTests", "tests\Masny.UnitTests\Masny.UnitTests.csproj", "{5C28C745-45C7-4535-A205-FE0AAF20B5B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C28C745-45C7-4535-A205-FE0AAF20B5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C28C745-45C7-4535-A205-FE0AAF20B5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C28C745-45C7-4535-A205-FE0AAF20B5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C28C745-45C7-4535-A205-FE0AAF20B5B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{2F5EB5F1-7CBF-41B2-A796-16B634357CF4} = {9D1D05F9-EDFC-4CF0-8030-4A51B457757C}
 		{E5C59CB2-63E2-4D81-9A77-32D97FCBA383} = {9D1D05F9-EDFC-4CF0-8030-4A51B457757C}
 		{9929CE7D-7196-4C9B-9B3F-6D709C3EE8B2} = {9D1D05F9-EDFC-4CF0-8030-4A51B457757C}
+		{5C28C745-45C7-4535-A205-FE0AAF20B5B3} = {3FF7AA35-DAB5-4983-A4A9-78AE100D75A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {061F95ED-6208-4261-9087-B3FA4F3DAF81}
