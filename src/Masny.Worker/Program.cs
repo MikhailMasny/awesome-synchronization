@@ -19,12 +19,17 @@ namespace Masny.Worker
             {
                 scheduler
                     .Schedule<PersonSynchronizationTask>()
-                    .DailyAt(21, 32)
+                    .DailyAt(20, 09)
                     .Zoned(TimeZoneInfo.Local);
 
                 scheduler
                     .Schedule<PostSynchronizationTask>()
-                    .DailyAt(21, 33)
+                    .DailyAt(20, 10)
+                    .Zoned(TimeZoneInfo.Local);
+
+                scheduler
+                    .Schedule<CommentSynchronizationTask>()
+                    .DailyAt(20, 11)
                     .Zoned(TimeZoneInfo.Local);
             });
             host.Run();
@@ -41,6 +46,7 @@ namespace Masny.Worker
                     services.AddScheduler();
                     services.AddTransient<PersonSynchronizationTask>();
                     services.AddTransient<PostSynchronizationTask>();
+                    services.AddTransient<CommentSynchronizationTask>();
                     services.AddApplication();
                     services.AddInfrastructure(configuration);
                 });

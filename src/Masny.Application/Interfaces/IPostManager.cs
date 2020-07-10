@@ -1,7 +1,5 @@
 ﻿using Masny.Application.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Masny.Application.Interfaces
@@ -24,6 +22,20 @@ namespace Masny.Application.Interfaces
         /// <param name="id">Identifier.</param>
         /// <returns>Post data transfer object.</returns>
         Task<PostDto> GetPost(int id);
+
+        /// <summary>
+        /// Get post without tracking.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <returns>Post data transfer object.</returns>
+        Task<PostDto> GetPostWithoutTracking(int id);
+
+        /// <summary>
+        /// Get post without tracking by cloud identifier.
+        /// </summary>
+        /// <param name="cloudId">Cloud identifier.</param>
+        /// <returns>Post data transfer object.</returns>
+        Task<PostDto> GetPostWithoutTrackingByCloudId(int cloudId);
 
         /// <summary>
         /// Get posts.

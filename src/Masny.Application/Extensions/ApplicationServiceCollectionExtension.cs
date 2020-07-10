@@ -23,6 +23,7 @@ namespace Masny.Application.Extensions
             services.AddScoped<IPersonManager, PersonManager>();
             services.AddScoped<IPostManager, PostManager>();
             services.AddScoped<ICloudManager, CloudManager>();
+            services.AddScoped<ICommentManager, CommentManager>();
 
             return services;
         }

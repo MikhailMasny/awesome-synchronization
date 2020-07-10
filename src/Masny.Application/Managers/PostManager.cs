@@ -75,5 +75,19 @@ namespace Masny.Application.Managers
             _context.Posts.Remove(post);
             return await _context.SaveChangesAsync();
         }
+
+        /// <inheritdoc/>
+        public async Task<PostDto> GetPostWithoutTracking(int id)
+        {
+            var post = await _context.Posts.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            return _mapper.Map<Post, PostDto>(post);
+        }
+
+        /// <inheritdoc/>
+        public async Task<PostDto> GetPostWithoutTrackingByCloudId(int cloudId)
+        {
+            var post = await _context.Posts.AsNoTracking().FirstOrDefaultAsync(p => p.CloudId == cloudId);
+            return _mapper.Map<Post, PostDto>(post);
+        }
     }
 }

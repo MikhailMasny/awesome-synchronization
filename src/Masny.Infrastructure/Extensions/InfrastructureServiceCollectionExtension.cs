@@ -29,6 +29,7 @@ namespace Masny.Infrastructure.Extensions
 
             services.AddScoped<IPostSynchronizationService, PostSynchronizationService>();
             services.AddScoped<IPersonSynchronizationService, PersonSynchronizationService>();
+            services.AddScoped<ICommentSynchronizationService, CommentSynchronizationService>();
 
             return services;
         }
