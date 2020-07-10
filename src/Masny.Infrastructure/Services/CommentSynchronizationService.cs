@@ -1,6 +1,8 @@
 ﻿using Masny.Application.Interfaces;
 using Masny.Application.Models;
+using Masny.Application.Resources;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,12 +12,14 @@ namespace Masny.Infrastructure.Services
     /// <inheritdoc cref="ICommentSynchronizationService"/>
     public class CommentSynchronizationService : ICommentSynchronizationService
     {
+        private readonly ILogger<CommentSynchronizationService> _logger;
         private readonly ICloudManager _cloudManager;
         private readonly ICommentManager _commentManager;
         private readonly IPostManager _postManager;
 
-        public CommentSynchronizationService(ICloudManager cloudManager, ICommentManager commentManager, IPostManager postManager)
+        public CommentSynchronizationService(ILogger<CommentSynchronizationService> logger, ICloudManager cloudManager, ICommentManager commentManager, IPostManager postManager)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cloudManager = cloudManager ?? throw new ArgumentNullException(nameof(cloudManager));
             _commentManager = commentManager ?? throw new ArgumentNullException(nameof(commentManager));
             _postManager = postManager ?? throw new ArgumentNullException(nameof(postManager));
@@ -24,12 +28,14 @@ namespace Masny.Infrastructure.Services
         /// <inheritdoc/>
         public async Task Add()
         {
+            _logger.LogInformation(Messages.CommentAddStart);
+
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
             var commentsApp = (await _commentManager.GetCommentsWithoutTracking()).ToList();
             var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
 
             var commentCloudIds = commentsCloud.Select(c => c.Id);
-            var commentAppIds = commentsApp.Select(c => c.Id);
+            var commentAppIds = commentsApp.Select(c => c.CloudId); // TODO: fix everywhere
 
             var newIds = commentCloudIds.Except(commentAppIds);
             var comments = commentsCloud.Join(
@@ -57,8 +63,14 @@ namespace Masny.Infrastructure.Services
 
                         await _commentManager.CreateComment(commentDto);
                     }
+                    else
+                    {
+                        _logger.LogError(Messages.CommentAddError, comment.PostId);
+                    }
                 }
             }
+
+            _logger.LogInformation(Messages.CommentAddEnd);
         }
 
         /// <inheritdoc/>
