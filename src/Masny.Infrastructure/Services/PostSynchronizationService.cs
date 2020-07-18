@@ -28,7 +28,7 @@ namespace Masny.Infrastructure.Services
         {
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
             var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
-            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+            var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
             var postsCloudIds = postsCloud.Select(p => p.Id);
             var postsAppIds = postsApp.Select(p => p.CloudId);
@@ -89,12 +89,12 @@ namespace Masny.Infrastructure.Services
             foreach (var postApp in postsApp)
             {
                 var postCloud = postsCloud.FirstOrDefault(p => p.Id == postApp.CloudId);
-                var personApp = await _personManager.GetPersonWithoutTracking(postApp.UserId);
+                var personApp = await _personManager.GetAsync(postApp.UserId);
                 var isUpdated = false;
 
                 if (personApp.CloudId != postCloud.UserId)
                 {
-                    var personId = (await _personManager.GetPersonWithoutTrackingByCloudId(postCloud.UserId)).Id;
+                    var personId = (await _personManager.GetByCloudIdAsync(postCloud.UserId)).Id;
                     postApp.UserId = personId;
                     isUpdated = true;
                 }

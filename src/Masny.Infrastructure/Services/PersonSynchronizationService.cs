@@ -21,10 +21,10 @@ namespace Masny.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task AddPeople()
+        public async Task AddAsync()
         {
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
-            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+            var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
             var peopleCloudIds = peopleCloud.Select(p => p.Id);
             var peopleAppIds = peopleApp.Select(p => p.CloudId);
@@ -48,16 +48,16 @@ namespace Masny.Infrastructure.Services
                         Email = user.Email
                     };
 
-                    await _personManager.CreatePerson(personDto);
+                    await _personManager.CreateAsync(personDto);
                 }
             }
         }
 
         /// <inheritdoc/>
-        public async Task DeletePeople()
+        public async Task DeleteAsync()
         {
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
-            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+            var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
             var peopleCloudIds = peopleCloud.Select(p => p.Id);
             var peopleAppIds = peopleApp.Select(p => p.CloudId);
@@ -68,16 +68,16 @@ namespace Masny.Infrastructure.Services
             {
                 foreach (var id in deleteIds)
                 {
-                    await _personManager.DeletePersonByCloudId(id);
+                    await _personManager.DeleteByCloudIdAsync(id);
                 }
             }
         }
 
         /// <inheritdoc/>
-        public async Task UpdatePeople()
+        public async Task UpdateAsync()
         {
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
-            var peopleApp = (await _personManager.GetPeopleWithoutTracking()).ToList();
+            var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
             foreach (var personApp in peopleApp)
             {
@@ -98,7 +98,7 @@ namespace Masny.Infrastructure.Services
 
                 if (isUpdated)
                 {
-                    await _personManager.UpdatePerson(personApp);
+                    await _personManager.UpdateAsync(personApp);
                 }
             }
         }

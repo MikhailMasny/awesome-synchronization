@@ -70,6 +70,19 @@ namespace Masny.UnitTests.Managers
         }
 
         [Fact]
+        public void GetComment_WhenEmptyContext_ReturnsNull()
+        {
+            // Arrange
+            var id = 1;
+
+            // Act
+            var commentDto = _commentManager.GetAsync(id).GetAwaiter().GetResult();
+
+            // Assert
+            Assert.Null(commentDto);
+        }
+
+        [Fact]
         public void GetComment_WhenNotEmptyContext_ReturnsComment()
         {
             // Arrange
@@ -82,7 +95,7 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Add(comment);
+            _appDbContext.Comments.Add(comment);
             _appDbContext.SaveChanges();
 
             // Act
@@ -94,16 +107,15 @@ namespace Masny.UnitTests.Managers
         }
 
         [Fact]
-        public void GetComment_WhenEmptyContext_ReturnsNull()
+        public void GetComments_WhenEmptyContext_ReturnsEmptyList()
         {
             // Arrange
-            var id = 1;
 
             // Act
-            var commentDto = _commentManager.GetAsync(id).GetAwaiter().GetResult();
+            var commentDtos = _commentManager.GetAllAsync().GetAwaiter().GetResult();
 
             // Assert
-            Assert.Null(commentDto);
+            Assert.Empty(commentDtos);
         }
 
         [Fact]
@@ -119,7 +131,7 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Add(comment);
+            _appDbContext.Comments.Add(comment);
             _appDbContext.SaveChanges();
 
             // Act
@@ -127,18 +139,6 @@ namespace Masny.UnitTests.Managers
 
             // Assert
             Assert.NotEmpty(commentDtos);
-        }
-
-        [Fact]
-        public void GetComments_WhenEmptyContext_ReturnsEmptyList()
-        {
-            // Arrange
-
-            // Act
-            var commentDtos = _commentManager.GetAllAsync().GetAwaiter().GetResult();
-
-            // Assert
-            Assert.Empty(commentDtos);
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace Masny.UnitTests.Managers
         }
 
         [Fact]
-        public void UpdateComment_WhenEmptyContext_ReturnsSuccessfulOperation()
+        public void UpdateComment_WhenNotEmptyContext_ReturnsSuccessfulOperation()
         {
             // Arrange
             var comment = new Comment
@@ -175,7 +175,7 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Add(comment);
+            _appDbContext.Comments.Add(comment);
             _appDbContext.SaveChanges();
 
             // Act
@@ -227,7 +227,7 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Add(comment);
+            _appDbContext.Comments.Add(comment);
             _appDbContext.SaveChanges();
             var commentsCount = _appDbContext.Comments.Count();
 
@@ -269,7 +269,7 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Add(comment);
+            _appDbContext.Comments.Add(comment);
             _appDbContext.SaveChanges();
             var commentsCount = _appDbContext.Comments.Count();
 

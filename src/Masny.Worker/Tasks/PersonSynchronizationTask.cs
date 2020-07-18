@@ -20,9 +20,9 @@ namespace Masny.Worker.Tasks
         /// <inheritdoc/>
         public async Task Invoke()
         {
-            await _personSynchronizationService.AddPeople();
-            await _personSynchronizationService.DeletePeople();
-            await _personSynchronizationService.UpdatePeople();
+            await _personSynchronizationService.AddAsync();
+            await _personSynchronizationService.DeleteAsync();
+            await _personSynchronizationService.UpdateAsync();
         }
     }
 }
