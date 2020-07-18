@@ -24,10 +24,10 @@ namespace Masny.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task AddPosts()
+        public async Task AddAsync()
         {
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
-            var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
+            var postsApp = (await _postManager.GetAllAsync()).ToList();
             var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
             var postsCloudIds = postsCloud.Select(p => p.Id);
@@ -55,16 +55,16 @@ namespace Masny.Infrastructure.Services
                         Body = post.Body
                     };
 
-                    await _postManager.CreatePost(postDto);
+                    await _postManager.CreateAsync(postDto);
                 }
             }
         }
 
         /// <inheritdoc/>
-        public async Task DeletePosts()
+        public async Task DeleteAsync()
         {
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
-            var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
+            var postsApp = (await _postManager.GetAllAsync()).ToList();
 
             var postsCloudIds = postsCloud.Select(p => p.Id);
             var postsAppIds = postsApp.Select(p => p.CloudId);
@@ -75,16 +75,16 @@ namespace Masny.Infrastructure.Services
             {
                 foreach (var id in deleteIds)
                 {
-                    await _postManager.DeletePostByCloudId(id);
+                    await _postManager.DeleteByCloudIdAsync(id);
                 }
             }
         }
 
         /// <inheritdoc/>
-        public async Task UpdatePosts()
+        public async Task UpdateAsync()
         {
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
-            var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
+            var postsApp = (await _postManager.GetAllAsync()).ToList();
 
             foreach (var postApp in postsApp)
             {
@@ -113,7 +113,7 @@ namespace Masny.Infrastructure.Services
 
                 if (isUpdated)
                 {
-                    await _postManager.UpdatePost(postApp);
+                    await _postManager.UpdateAsync(postApp);
                 }
             }
         }

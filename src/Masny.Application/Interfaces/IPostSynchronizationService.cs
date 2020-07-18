@@ -10,16 +10,16 @@ namespace Masny.Application.Interfaces
         /// <summary>
         /// Add new posts.
         /// </summary>
-        Task AddPosts();
+        Task AddAsync();
 
         /// <summary>
         /// Delete posts.
         /// </summary>
-        Task DeletePosts();
+        Task DeleteAsync();
 
         /// <summary>
         /// Update posts.
         /// </summary>
-        Task UpdatePosts();
+        Task UpdateAsync();
     }
 }

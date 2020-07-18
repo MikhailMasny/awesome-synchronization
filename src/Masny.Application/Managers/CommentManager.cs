@@ -69,8 +69,8 @@ namespace Masny.Application.Managers
 
             comment.CloudId = commentDto.CloudId;
             comment.PostId = commentDto.PostId;
-            comment.Email = commentDto.Email;
             comment.Name = commentDto.Name;
+            comment.Email = commentDto.Email;
             comment.Body = commentDto.Body;
 
             return await _context.SaveChangesAsync();

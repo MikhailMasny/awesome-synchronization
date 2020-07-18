@@ -122,7 +122,7 @@ namespace Masny.UnitTests.Managers
         public void GetComments_WhenNotEmptyContext_ReturnsComments()
         {
             // Arrange
-            var comment = new Comment
+            var commentOne = new Comment
             {
                 Id = 1,
                 CloudId = 1,
@@ -131,7 +131,17 @@ namespace Masny.UnitTests.Managers
                 Name = "fakename",
                 Body = "fakebody",
             };
-            _appDbContext.Comments.Add(comment);
+            var commentTwo = new Comment
+            {
+                Id = 2,
+                CloudId = 2,
+                PostId = 2,
+                Email = "fake@fake.com",
+                Name = "fakename",
+                Body = "fakebody",
+            };
+            _appDbContext.Comments.Add(commentOne);
+            _appDbContext.Comments.Add(commentTwo);
             _appDbContext.SaveChanges();
 
             // Act

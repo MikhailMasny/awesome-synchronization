@@ -73,8 +73,8 @@ namespace Masny.Application.Managers
             // See comment at CommentManager file
 
             person.CloudId = personDto.CloudId;
-            person.Email = personDto.Email;
             person.Name = personDto.Name;
+            person.Email = personDto.Email;
 
             return await _context.SaveChangesAsync();
         }

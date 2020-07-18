@@ -20,9 +20,9 @@ namespace Masny.Worker.Tasks
         /// <inheritdoc/>
         public async Task Invoke()
         {
-            await _postSynchronizationService.AddPosts();
-            await _postSynchronizationService.DeletePosts();
-            await _postSynchronizationService.UpdatePosts();
+            await _postSynchronizationService.AddAsync();
+            await _postSynchronizationService.DeleteAsync();
+            await _postSynchronizationService.UpdateAsync();
         }
     }
 }

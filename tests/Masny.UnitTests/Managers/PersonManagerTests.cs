@@ -153,14 +153,22 @@ namespace Masny.UnitTests.Managers
         public void GetPeople_WhenNotEmptyContext_ReturnsPeople()
         {
             // Arrange
-            var person = new Person
+            var personOne = new Person
             {
                 Id = 1,
                 CloudId = 1,
                 Email = "fake@fake.com",
                 Name = "fakename",
             };
-            _appDbContext.Persons.Add(person);
+            var personTwo = new Person
+            {
+                Id = 2,
+                CloudId = 2,
+                Email = "fake@fake.com",
+                Name = "fakename",
+            };
+            _appDbContext.Persons.Add(personOne);
+            _appDbContext.Persons.Add(personTwo);
             _appDbContext.SaveChanges();
 
             // Act

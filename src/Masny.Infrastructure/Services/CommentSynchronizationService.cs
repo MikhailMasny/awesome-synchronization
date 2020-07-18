@@ -32,7 +32,7 @@ namespace Masny.Infrastructure.Services
 
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
             var commentsApp = (await _commentManager.GetAllAsync()).ToList();
-            var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
+            var postsApp = (await _postManager.GetAllAsync()).ToList();
 
             var commentCloudIds = commentsCloud.Select(c => c.Id);
             var commentAppIds = commentsApp.Select(c => c.CloudId); // TODO: fix everywhere
@@ -102,12 +102,12 @@ namespace Masny.Infrastructure.Services
             foreach (var commentApp in commentsApp)
             {
                 var commentCloud = commentsCloud.FirstOrDefault(c => c.Id == commentApp.CloudId);
-                var postApp = await _postManager.GetPostWithoutTracking(commentApp.PostId);
+                var postApp = await _postManager.GetAsync(commentApp.PostId);
                 var isUpdated = false;
 
                 if (postApp.CloudId != commentCloud.PostId)
                 {
-                    var postId = (await _postManager.GetPostWithoutTrackingByCloudId(commentCloud.Id)).Id;
+                    var postId = (await _postManager.GetByCloudIdAsync(commentCloud.Id)).Id;
                     commentApp.PostId = postId;
                     isUpdated = true;
                 }

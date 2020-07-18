@@ -14,60 +14,47 @@ namespace Masny.Application.Interfaces
         /// </summary>
         /// <param name="postDto">Post data transfer object.</param>
         /// <returns>Operation result.</returns>
-        Task<int> CreatePost(PostDto postDto);
-
-        /// <summary>
-        /// Get post.
-        /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <returns>Post data transfer object.</returns>
-        Task<PostDto> GetPost(int id);
+        Task<int> CreateAsync(PostDto postDto);
 
         /// <summary>
         /// Get post without tracking.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Post data transfer object.</returns>
-        Task<PostDto> GetPostWithoutTracking(int id);
+        Task<PostDto> GetAsync(int id);
 
         /// <summary>
         /// Get post without tracking by cloud identifier.
         /// </summary>
         /// <param name="cloudId">Cloud identifier.</param>
         /// <returns>Post data transfer object.</returns>
-        Task<PostDto> GetPostWithoutTrackingByCloudId(int cloudId);
-
-        /// <summary>
-        /// Get posts.
-        /// </summary>
-        /// <returns>List of post data transfer objects.</returns>
-        Task<IEnumerable<PostDto>> GetPosts();
+        Task<PostDto> GetByCloudIdAsync(int cloudId);
 
         /// <summary>
         /// Get posts without tracking.
         /// </summary>
         /// <returns>List of posts data transfer objects.</returns>
-        Task<IEnumerable<PostDto>> GetPostsWithoutTracking();
+        Task<IEnumerable<PostDto>> GetAllAsync();
 
         /// <summary>
         /// Update post.
         /// </summary>
         /// <param name="postDto">Post data transfer object.</param>
         /// <returns>Operation result.</returns>
-        Task<int> UpdatePost(PostDto postDto);
+        Task<int> UpdateAsync(PostDto postDto);
 
         /// <summary>
         /// Delete post.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Operation result.</returns>
-        Task<int> DeletePost(int id);
+        Task<int> DeleteAsync(int id);
 
         /// <summary>
         /// Delete post by cloud identifier.
         /// </summary>
         /// <param name="cloudId">Cloud identifier.</param>
         /// <returns>Operation result.</returns>
-        Task<int> DeletePostByCloudId(int cloudId);
+        Task<int> DeleteByCloudIdAsync(int cloudId);
     }
 }
