@@ -1,0 +1,14 @@
+[*]
+end_of_line = crlf
+
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1707: Remove the underscores from member name Masny.UnitTests.Managers.CommentManagerTests.GetComments_WhenNotEmptyContext_ReturnsComments().
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+
+[*.xml]
+indent_style = space

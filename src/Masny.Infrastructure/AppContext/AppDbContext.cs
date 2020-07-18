@@ -2,6 +2,7 @@
 using Masny.Domain.Models.App;
 using Masny.Infrastructure.AppContext.Configurations;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +35,8 @@ namespace Masny.Infrastructure.AppContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
+
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new PostConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());

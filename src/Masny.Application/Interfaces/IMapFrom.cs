@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 
 namespace Masny.Application.Interfaces
 {
@@ -12,6 +13,11 @@ namespace Masny.Application.Interfaces
         /// Mapping.
         /// </summary>
         /// <param name="profile">Model profile.</param>
-        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType()).ReverseMap();
+        void Mapping(Profile profile)
+        {
+            profile = profile ?? throw new ArgumentNullException(nameof(profile));
+
+            profile.CreateMap(typeof(T), GetType()).ReverseMap();
+        }
     }
 }

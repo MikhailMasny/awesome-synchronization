@@ -4,6 +4,7 @@ namespace Masny.Infrastructure.AppContext.Migrations
 {
     public partial class Initial : Migration
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -77,6 +78,7 @@ namespace Masny.Infrastructure.AppContext.Migrations
                 column: "UserId");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
