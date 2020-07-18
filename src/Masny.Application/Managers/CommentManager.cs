@@ -22,56 +22,82 @@ namespace Masny.Application.Managers
         }
 
         /// <inheritdoc/>
-        public async Task<int> CreateComment(CommentDto commentDto)
+        public async Task<int> CreateAsync(CommentDto commentDto)
         {
+            if (commentDto == null)
+            {
+                throw new ArgumentNullException(nameof(commentDto));
+            }
+
             var comment = _mapper.Map<CommentDto, Comment>(commentDto);
             await _context.Comments.AddAsync(comment);
             return await _context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<int> DeleteComment(int id)
+        public async Task<CommentDto> GetAsync(int id)
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
-            _context.Comments.Remove(comment);
-            return await _context.SaveChangesAsync();
-        }
-
-        /// <inheritdoc/>
-        public async Task<int> DeleteCommentByCloudId(int cloudId)
-        {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.CloudId == cloudId);
-            _context.Comments.Remove(comment);
-            return await _context.SaveChangesAsync();
-        }
-
-        /// <inheritdoc/>
-        public async Task<CommentDto> GetComment(int id)
-        {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            var comment = await _context.Comments.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             return _mapper.Map<Comment, CommentDto>(comment);
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<CommentDto>> GetComments()
-        {
-            var comments = await _context.Comments.ToListAsync();
-            return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDto>>(comments);
-        }
-
-        /// <inheritdoc/>
-        public async Task<IEnumerable<CommentDto>> GetCommentsWithoutTracking()
+        public async Task<IEnumerable<CommentDto>> GetAllAsync()
         {
             var comments = await _context.Comments.AsNoTracking().ToListAsync();
             return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDto>>(comments);
         }
 
         /// <inheritdoc/>
-        public async Task<int> UpdateComment(CommentDto commentDto)
+        public async Task<int> UpdateAsync(CommentDto commentDto)
         {
-            // TODO: Serilog
-            var comment = _mapper.Map<CommentDto, Comment>(commentDto);
-            _context.Comments.Update(comment);
+            if (commentDto == null)
+            {
+                throw new ArgumentNullException(nameof(commentDto));
+            }
+
+            var comment = await _context.Comments.FindAsync(commentDto.Id);
+            if (comment == null)
+            {
+                return 0;
+            }
+
+            // If have class context use:
+            // entity = _mapper.Map<EntityDto, Entity>(entityDto);
+            // _context.Entry(entity).State = EntityState.Modified;
+
+            comment.CloudId = commentDto.CloudId;
+            comment.PostId = commentDto.PostId;
+            comment.Email = commentDto.Email;
+            comment.Name = commentDto.Name;
+            comment.Body = commentDto.Body;
+
+            return await _context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> DeleteAsync(int id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment == null)
+            {
+                return 0;
+            }
+
+            _context.Comments.Remove(comment);
+            return await _context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> DeleteByCloudIdAsync(int cloudId)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.CloudId == cloudId);
+            if (comment == null)
+            {
+                return 0;
+            }
+
+            _context.Comments.Remove(comment);
             return await _context.SaveChangesAsync();
         }
     }

@@ -14,46 +14,40 @@ namespace Masny.Application.Interfaces
         /// </summary>
         /// <param name="commentDto">Comment data transfer object.</param>
         /// <returns>Operation result.</returns>
-        Task<int> CreateComment(CommentDto commentDto);
+        Task<int> CreateAsync(CommentDto commentDto);
 
         /// <summary>
         /// Get comment.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Comment data transfer object.</returns>
-        Task<CommentDto> GetComment(int id);
+        Task<CommentDto> GetAsync(int id);
 
         /// <summary>
         /// Get comments.
         /// </summary>
-        /// <returns>List of comment data transfer objects.</returns>
-        Task<IEnumerable<CommentDto>> GetComments();
-
-        /// <summary>
-        /// Get comments without tracking.
-        /// </summary>
         /// <returns>List of comments data transfer objects.</returns>
-        Task<IEnumerable<CommentDto>> GetCommentsWithoutTracking();
+        Task<IEnumerable<CommentDto>> GetAllAsync();
 
         /// <summary>
         /// Update comment.
         /// </summary>
         /// <param name="commentDto">Comment data transfer object.</param>
         /// <returns>Operation result.</returns>
-        Task<int> UpdateComment(CommentDto commentDto);
+        Task<int> UpdateAsync(CommentDto commentDto);
 
         /// <summary>
         /// Delete comment.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Operation result.</returns>
-        Task<int> DeleteComment(int id);
+        Task<int> DeleteAsync(int id);
 
         /// <summary>
         /// Delete comment by cloud identifier.
         /// </summary>
         /// <param name="cloudId">Cloud identifier.</param>
         /// <returns>Operation result.</returns>
-        Task<int> DeleteCommentByCloudId(int cloudId);
+        Task<int> DeleteByCloudIdAsync(int cloudId);
     }
 }

@@ -10,16 +10,16 @@ namespace Masny.Application.Interfaces
         /// <summary>
         /// Add new comments.
         /// </summary>
-        Task Add();
+        Task AddAsync();
 
         /// <summary>
         /// Delete comments.
         /// </summary>
-        Task Delete();
+        Task DeleteAsync();
 
         /// <summary>
         /// Update comments.
         /// </summary>
-        Task Update();
+        Task UpdateAsync();
     }
 }

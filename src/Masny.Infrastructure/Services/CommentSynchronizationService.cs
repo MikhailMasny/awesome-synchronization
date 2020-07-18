@@ -26,12 +26,12 @@ namespace Masny.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task Add()
+        public async Task AddAsync()
         {
             _logger.LogInformation(Messages.CommentAddStart);
 
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
-            var commentsApp = (await _commentManager.GetCommentsWithoutTracking()).ToList();
+            var commentsApp = (await _commentManager.GetAllAsync()).ToList();
             var postsApp = (await _postManager.GetPostsWithoutTracking()).ToList();
 
             var commentCloudIds = commentsCloud.Select(c => c.Id);
@@ -61,7 +61,7 @@ namespace Masny.Infrastructure.Services
                             Body = comment.Body
                         };
 
-                        await _commentManager.CreateComment(commentDto);
+                        await _commentManager.CreateAsync(commentDto);
                     }
                     else
                     {
@@ -74,10 +74,10 @@ namespace Masny.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task Delete()
+        public async Task DeleteAsync()
         {
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
-            var commentsApp = (await _commentManager.GetCommentsWithoutTracking()).ToList();
+            var commentsApp = (await _commentManager.GetAllAsync()).ToList();
 
             var commentCloudIds = commentsCloud.Select(c => c.Id);
             var commentAppIds = commentsApp.Select(c => c.CloudId);
@@ -88,16 +88,16 @@ namespace Masny.Infrastructure.Services
             {
                 foreach (var id in deleteIds)
                 {
-                    await _commentManager.DeleteCommentByCloudId(id);
+                    await _commentManager.DeleteByCloudIdAsync(id);
                 }
             }
         }
 
         /// <inheritdoc/>
-        public async Task Update()
+        public async Task UpdateAsync()
         {
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
-            var commentsApp = (await _commentManager.GetCommentsWithoutTracking()).ToList();
+            var commentsApp = (await _commentManager.GetAllAsync()).ToList();
 
             foreach (var commentApp in commentsApp)
             {
@@ -132,7 +132,7 @@ namespace Masny.Infrastructure.Services
 
                 if (isUpdated)
                 {
-                    await _commentManager.UpdateComment(commentApp);
+                    await _commentManager.UpdateAsync(commentApp);
                 }
             }
         }
