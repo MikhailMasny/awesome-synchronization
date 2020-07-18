@@ -118,12 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CommentAddEnd" xml:space="preserve">
-    <value>Обновление комментариев оконочено.</value>
+    <value>Adding new comments is over.</value>
   </data>
   <data name="CommentAddError" xml:space="preserve">
-    <value>Произошла ошибка при добавлении комментария с ключем PostId = {0}</value>
+    <value>An error occured while adding a comment with Post Id = {0}</value>
   </data>
   <data name="CommentAddStart" xml:space="preserve">
-    <value>Начато обновление комментариев..</value>
+    <value>Adding new comments started..</value>
+  </data>
+  <data name="CommentDeleteEnd" xml:space="preserve">
+    <value>Deletion of comments is over.</value>
+  </data>
+  <data name="CommentDeleteStart" xml:space="preserve">
+    <value>Deletion of comments started..</value>
+  </data>
+  <data name="CommentUpdateEnd" xml:space="preserve">
+    <value>Updating comments is over.</value>
+  </data>
+  <data name="CommentUpdateStart" xml:space="preserve">
+    <value>Updating comments started..</value>
+  </data>
+  <data name="PersonAddEnd" xml:space="preserve">
+    <value>Adding new people is over.</value>
+  </data>
+  <data name="PersonAddStart" xml:space="preserve">
+    <value>Adding new people started..</value>
+  </data>
+  <data name="PersonDeleteEnd" xml:space="preserve">
+    <value>Deletion of people is over.</value>
+  </data>
+  <data name="PersonDeleteStart" xml:space="preserve">
+    <value>Deletion of people started..</value>
+  </data>
+  <data name="PersonUpdateEnd" xml:space="preserve">
+    <value>Updating people is over.</value>
+  </data>
+  <data name="PersonUpdateStart" xml:space="preserve">
+    <value>Updating people started..</value>
+  </data>
+  <data name="PostAddEnd" xml:space="preserve">
+    <value>Adding new posts is over.</value>
+  </data>
+  <data name="PostAddError" xml:space="preserve">
+    <value>An error occured while adding a post with User Id = {0}</value>
+  </data>
+  <data name="PostAddStart" xml:space="preserve">
+    <value>Adding new posts started..</value>
+  </data>
+  <data name="PostDeleteEnd" xml:space="preserve">
+    <value>Deletion of posts is over.</value>
+  </data>
+  <data name="PostDeleteStart" xml:space="preserve">
+    <value>Deletion of posts started..</value>
+  </data>
+  <data name="PostUpdateEnd" xml:space="preserve">
+    <value>Updating posts is over.</value>
+  </data>
+  <data name="PostUpdateStart" xml:space="preserve">
+    <value>Updating posts started..</value>
   </data>
 </root>

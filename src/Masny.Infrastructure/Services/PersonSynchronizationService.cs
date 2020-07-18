@@ -1,6 +1,8 @@
 ﻿using Masny.Application.Interfaces;
 using Masny.Application.Models;
+using Masny.Application.Resources;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,15 @@ namespace Masny.Infrastructure.Services
     /// <inheritdoc cref="IPersonSynchronizationService"/>
     public class PersonSynchronizationService : IPersonSynchronizationService
     {
+        private readonly ILogger<PersonSynchronizationService> _logger;
         private readonly ICloudManager _cloudManager;
         private readonly IPersonManager _personManager;
 
-        public PersonSynchronizationService(ICloudManager cloudManager, IPersonManager personManager)
+        public PersonSynchronizationService(ILogger<PersonSynchronizationService> logger,
+                                            ICloudManager cloudManager,
+                                            IPersonManager personManager)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cloudManager = cloudManager ?? throw new ArgumentNullException(nameof(cloudManager));
             _personManager = personManager ?? throw new ArgumentNullException(nameof(personManager));
         }
@@ -23,6 +29,8 @@ namespace Masny.Infrastructure.Services
         /// <inheritdoc/>
         public async Task AddAsync()
         {
+            _logger.LogInformation(SyncMessage.PersonAddStart);
+
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
             var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
@@ -51,11 +59,15 @@ namespace Masny.Infrastructure.Services
                     await _personManager.CreateAsync(personDto);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PersonAddEnd);
         }
 
         /// <inheritdoc/>
         public async Task DeleteAsync()
         {
+            _logger.LogInformation(SyncMessage.PersonDeleteEnd);
+
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
             var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
@@ -71,11 +83,15 @@ namespace Masny.Infrastructure.Services
                     await _personManager.DeleteByCloudIdAsync(id);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PersonDeleteStart);
         }
 
         /// <inheritdoc/>
         public async Task UpdateAsync()
         {
+            _logger.LogInformation(SyncMessage.PersonUpdateStart);
+
             var peopleCloud = await _cloudManager.GetUsers().ToListAsync();
             var peopleApp = (await _personManager.GetAllAsync()).ToList();
 
@@ -101,6 +117,8 @@ namespace Masny.Infrastructure.Services
                     await _personManager.UpdateAsync(personApp);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PersonUpdateEnd);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Masny.Application.Interfaces;
 using Masny.Application.Models;
+using Masny.Application.Resources;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Masny.Infrastructure.Services
@@ -12,12 +13,17 @@ namespace Masny.Infrastructure.Services
     /// <inheritdoc cref="IPostSynchronizationService"/>
     public class PostSynchronizationService : IPostSynchronizationService
     {
+        private readonly ILogger<PostSynchronizationService> _logger;
         private readonly ICloudManager _cloudManager;
         private readonly IPostManager _postManager;
         private readonly IPersonManager _personManager;
 
-        public PostSynchronizationService(ICloudManager cloudManager, IPostManager postManager, IPersonManager personManager)
+        public PostSynchronizationService(ILogger<PostSynchronizationService> logger,
+                                          ICloudManager cloudManager,
+                                          IPostManager postManager,
+                                          IPersonManager personManager)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cloudManager = cloudManager ?? throw new ArgumentNullException(nameof(cloudManager));
             _postManager = postManager ?? throw new ArgumentNullException(nameof(postManager));
             _personManager = personManager ?? throw new ArgumentNullException(nameof(personManager));
@@ -26,6 +32,8 @@ namespace Masny.Infrastructure.Services
         /// <inheritdoc/>
         public async Task AddAsync()
         {
+            _logger.LogInformation(SyncMessage.PostAddStart);
+
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
             var postsApp = (await _postManager.GetAllAsync()).ToList();
             var peopleApp = (await _personManager.GetAllAsync()).ToList();
@@ -45,24 +53,35 @@ namespace Masny.Infrastructure.Services
             {
                 foreach (var post in posts)
                 {
-                    var userId = peopleApp.FirstOrDefault(p => p.CloudId == post.UserId).Id;
+                    var user = peopleApp.FirstOrDefault(p => p.CloudId == post.UserId);
 
-                    var postDto = new PostDto
+                    if (user != null)
                     {
-                        CloudId = post.Id,
-                        UserId = userId,
-                        Title = post.Title,
-                        Body = post.Body
-                    };
+                        var postDto = new PostDto
+                        {
+                            CloudId = post.Id,
+                            UserId = user.Id,
+                            Title = post.Title,
+                            Body = post.Body
+                        };
 
-                    await _postManager.CreateAsync(postDto);
+                        await _postManager.CreateAsync(postDto);
+                    }
+                    else
+                    {
+                        _logger.LogError(SyncMessage.PostAddError, post.UserId);
+                    }
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PostAddEnd);
         }
 
         /// <inheritdoc/>
         public async Task DeleteAsync()
         {
+            _logger.LogInformation(SyncMessage.PostDeleteStart);
+
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
             var postsApp = (await _postManager.GetAllAsync()).ToList();
 
@@ -78,11 +97,15 @@ namespace Masny.Infrastructure.Services
                     await _postManager.DeleteByCloudIdAsync(id);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PostDeleteEnd);
         }
 
         /// <inheritdoc/>
         public async Task UpdateAsync()
         {
+            _logger.LogInformation(SyncMessage.PostUpdateStart);
+
             var postsCloud = await _cloudManager.GetPosts().ToListAsync();
             var postsApp = (await _postManager.GetAllAsync()).ToList();
 
@@ -116,6 +139,8 @@ namespace Masny.Infrastructure.Services
                     await _postManager.UpdateAsync(postApp);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.PostUpdateEnd);
         }
     }
 }

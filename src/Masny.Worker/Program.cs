@@ -16,6 +16,9 @@ namespace Masny.Worker
     {
         public static int Main(string[] args)
         {
+            const string hostStart = "Starting web host.";
+            const string hostExceptrion = "Host terminated unexpectedly";
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -25,25 +28,25 @@ namespace Masny.Worker
 
             try
             {
-                Log.Information("Starting web host");
+                Log.Information(hostStart);
 
                 IHost host = CreateHostBuilder(args).Build();
                 host.Services.UseScheduler(scheduler =>
                 {
-                    //scheduler
-                    //    .Schedule<PersonSynchronizationTask>()
-                    //    .DailyAt(20, 09)
-                    //    .Zoned(TimeZoneInfo.Local);
+                    scheduler
+                        .Schedule<PersonSynchronizationTask>()
+                        .DailyAt(05, 00)
+                        .Zoned(TimeZoneInfo.Utc);
 
-                    //scheduler
-                    //    .Schedule<PostSynchronizationTask>()
-                    //    .DailyAt(20, 10)
-                    //    .Zoned(TimeZoneInfo.Local);
+                    scheduler
+                        .Schedule<PostSynchronizationTask>()
+                        .DailyAt(05, 01)
+                        .Zoned(TimeZoneInfo.Utc);
 
                     scheduler
                         .Schedule<CommentSynchronizationTask>()
-                        .DailyAt(21, 04)
-                        .Zoned(TimeZoneInfo.Local);
+                        .DailyAt(05, 02)
+                        .Zoned(TimeZoneInfo.Utc);
                 });
                 host.Run();
 
@@ -51,7 +54,7 @@ namespace Masny.Worker
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                Log.Fatal(ex, hostExceptrion);
                 return 1;
             }
             finally

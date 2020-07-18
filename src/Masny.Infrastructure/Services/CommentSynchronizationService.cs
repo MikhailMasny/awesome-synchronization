@@ -17,7 +17,10 @@ namespace Masny.Infrastructure.Services
         private readonly ICommentManager _commentManager;
         private readonly IPostManager _postManager;
 
-        public CommentSynchronizationService(ILogger<CommentSynchronizationService> logger, ICloudManager cloudManager, ICommentManager commentManager, IPostManager postManager)
+        public CommentSynchronizationService(ILogger<CommentSynchronizationService> logger,
+                                             ICloudManager cloudManager,
+                                             ICommentManager commentManager,
+                                             IPostManager postManager)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cloudManager = cloudManager ?? throw new ArgumentNullException(nameof(cloudManager));
@@ -28,14 +31,14 @@ namespace Masny.Infrastructure.Services
         /// <inheritdoc/>
         public async Task AddAsync()
         {
-            _logger.LogInformation(Messages.CommentAddStart);
+            _logger.LogInformation(SyncMessage.CommentAddStart);
 
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
             var commentsApp = (await _commentManager.GetAllAsync()).ToList();
             var postsApp = (await _postManager.GetAllAsync()).ToList();
 
             var commentCloudIds = commentsCloud.Select(c => c.Id);
-            var commentAppIds = commentsApp.Select(c => c.CloudId); // TODO: fix everywhere
+            var commentAppIds = commentsApp.Select(c => c.CloudId);
 
             var newIds = commentCloudIds.Except(commentAppIds);
             var comments = commentsCloud.Join(
@@ -65,17 +68,19 @@ namespace Masny.Infrastructure.Services
                     }
                     else
                     {
-                        _logger.LogError(Messages.CommentAddError, comment.PostId);
+                        _logger.LogError(SyncMessage.CommentAddError, comment.PostId);
                     }
                 }
             }
 
-            _logger.LogInformation(Messages.CommentAddEnd);
+            _logger.LogInformation(SyncMessage.CommentAddEnd);
         }
 
         /// <inheritdoc/>
         public async Task DeleteAsync()
         {
+            _logger.LogInformation(SyncMessage.CommentDeleteStart);
+
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
             var commentsApp = (await _commentManager.GetAllAsync()).ToList();
 
@@ -91,11 +96,15 @@ namespace Masny.Infrastructure.Services
                     await _commentManager.DeleteByCloudIdAsync(id);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.CommentDeleteEnd);
         }
 
         /// <inheritdoc/>
         public async Task UpdateAsync()
         {
+            _logger.LogInformation(SyncMessage.CommentUpdateStart);
+
             var commentsCloud = await _cloudManager.GetComments().ToListAsync();
             var commentsApp = (await _commentManager.GetAllAsync()).ToList();
 
@@ -135,6 +144,8 @@ namespace Masny.Infrastructure.Services
                     await _commentManager.UpdateAsync(commentApp);
                 }
             }
+
+            _logger.LogInformation(SyncMessage.CommentUpdateEnd);
         }
     }
 }
